@@ -1,6 +1,7 @@
 class Employee < ApplicationRecord
   belongs_to :office
   belongs_to :department
+  has_many :articles
   has_many :profiles
 
   validates :number, presence: true, uniqueness: true
@@ -10,7 +11,6 @@ class Employee < ApplicationRecord
   validates :password, presence: true
   validates :email, presence: true
   validates :date_of_joining, presence: true
-
 
   scope :active, -> {
     where(deleted_at: nil)
