@@ -251,7 +251,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.4.4)
-  bootstrap (~> 5.2.0)
+  bootstrap
   byebug
   jbuilder (~> 2.7)
   listen (~> 3.3)
