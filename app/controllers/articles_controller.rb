@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ArticlesController < ApplicationController
   def index
     @articles = Article.active.order("#{sort_column} #{sort_direction}")
@@ -15,11 +17,11 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     @article.employee = current_user
-      if @article.save
-        redirect_to article_path(@article), notice: "「#{@article.title}」の記事を登録しました。"
-      else
-        render :new
-      end
+    if @article.save
+      redirect_to article_path(@article), notice: "「#{@article.title}」の記事を登録しました。"
+    else
+      render :new
+    end
   end
 
   def edit
@@ -40,7 +42,7 @@ class ArticlesController < ApplicationController
   def destroy
     article = Article.find(params[:id])
     article.destroy
-    redirect_to articles_path, notice:"「#{article.title}」の記事を削除しました。"
+    redirect_to articles_path, notice: "「#{article.title}」の記事を削除しました。"
   end
 
   private
@@ -50,11 +52,10 @@ class ArticlesController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ? params[:sort] : 'created_at'
+    params[:sort] || 'created_at'
   end
 
   def sort_direction
-    params[:direction] ? params[:direction] : 'asc'
+    params[:direction] || 'asc'
   end
-
 end
