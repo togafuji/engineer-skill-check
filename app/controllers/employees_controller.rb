@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class EmployeesController < ApplicationController
-  before_action :set_employee, only: %i(edit update destroy)
-  before_action :set_form_option, only: %i(new create edit update)
+  before_action :set_employee, only: %i[edit update destroy]
+  before_action :set_form_option, only: %i[new create edit update]
 
   def index
     @employees = Employee.active.order("#{sort_column} #{sort_direction}")
@@ -12,15 +14,14 @@ class EmployeesController < ApplicationController
 
   def create
     @employee = Employee.new(employee_params)
-      if @employee.save
-        redirect_to employees_url, notice: "社員「#{@employee.last_name} #{@employee.first_name}」を登録しました。"
-      else
-        render :new
-      end
+    if @employee.save
+      redirect_to employees_url, notice: "社員「#{@employee.last_name} #{@employee.first_name}」を登録しました。"
+    else
+      render :new
+    end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @employee.update(employee_params)
@@ -43,11 +44,12 @@ class EmployeesController < ApplicationController
   private
 
   def employee_params
-    params.require(:employee).permit(:number, :last_name, :first_name, :account, :password, :department_id, :office_id, :email, :date_of_joining, :employee_info_manage_auth, :news_posting_auth)
+    params.require(:employee).permit(:number, :last_name, :first_name, :account, :password, :department_id, :office_id,
+                                     :email, :date_of_joining, :employee_info_manage_auth, :news_posting_auth)
   end
 
   def set_employee
-    @employee = Employee.find(params["id"])
+    @employee = Employee.find(params['id'])
   end
 
   def set_form_option
@@ -56,11 +58,10 @@ class EmployeesController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ? params[:sort] : 'number'
+    params[:sort] || 'number'
   end
 
   def sort_direction
-    params[:direction] ? params[:direction] : 'asc'
+    params[:direction] || 'asc'
   end
-
 end

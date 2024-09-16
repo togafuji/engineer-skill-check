@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Employee < ApplicationRecord
   belongs_to :office
   belongs_to :department
@@ -12,7 +14,7 @@ class Employee < ApplicationRecord
   validates :email, presence: true
   validates :date_of_joining, presence: true
 
-  scope :active, -> {
+  scope :active, lambda {
     where(deleted_at: nil)
   }
 end
